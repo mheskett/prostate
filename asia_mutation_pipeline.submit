@@ -1,0 +1,165 @@
+executable = align_fastq.sh
+Universe        = vanilla
+request_cpus = 4
+request_memory = 12GB
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+log = Tmp/logs/log.$(Cluster).$(Process)
+output = Tmp/logs/out.$(Cluster).$(Process)
+error = Tmp/logs/err.$(Cluster).$(Process)
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7452_3_interleaved.fastq VHL_7452_3 VHL_7452 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7452_4_interleaved.fastq VHL_7452_4 VHL_7452 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7452_5_interleaved.fastq VHL_7452_5 VHL_7452 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7452_8_interleaved.fastq VHL_7452_8 VHL_7452 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7458_3_interleaved.fastq VHL_7458_3 VHL_7458 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7458_4_interleaved.fastq VHL_7458_4 VHL_7458 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7458_5_interleaved.fastq VHL_7458_5 VHL_7458 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7458_8_interleaved.fastq VHL_7458_8 VHL_7458 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7460_3_interleaved.fastq VHL_7460_3 VHL_7460 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7460_4_interleaved.fastq VHL_7460_4 VHL_7460 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7460_5_interleaved.fastq VHL_7460_5 VHL_7460 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7460_8_interleaved.fastq VHL_7460_8 VHL_7460 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7461_3_interleaved.fastq VHL_7461_3 VHL_7461 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7461_4_interleaved.fastq VHL_7461_4 VHL_7461 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7461_5_interleaved.fastq VHL_7461_5 VHL_7461 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7461_8_interleaved.fastq VHL_7461_8 VHL_7461 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7570_3_interleaved.fastq VHL_7570_3 VHL_7570 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7570_4_interleaved.fastq VHL_7570_4 VHL_7570 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7570_5_interleaved.fastq VHL_7570_5 VHL_7570 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7570_8_interleaved.fastq VHL_7570_8 VHL_7570 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7571_3_interleaved.fastq VHL_7571_3 VHL_7571 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7571_4_interleaved.fastq VHL_7571_4 VHL_7571 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7571_5_interleaved.fastq VHL_7571_5 VHL_7571 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7571_8_interleaved.fastq VHL_7571_8 VHL_7571 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7573_3_interleaved.fastq VHL_7573_3 VHL_7573 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7573_4_interleaved.fastq VHL_7573_4 VHL_7573 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7573_5_interleaved.fastq VHL_7573_5 VHL_7573 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7573_8_interleaved.fastq VHL_7573_8 VHL_7573 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7576_3_interleaved.fastq VHL_7576_3 VHL_7576 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7576_4_interleaved.fastq VHL_7576_4 VHL_7576 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7576_5_interleaved.fastq VHL_7576_5 VHL_7576 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7576_8_interleaved.fastq VHL_7576_8 VHL_7576 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7578_3_interleaved.fastq VHL_7578_3 VHL_7578 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7578_4_interleaved.fastq VHL_7578_4 VHL_7578 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7578_5_interleaved.fastq VHL_7578_5 VHL_7578 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7578_8_interleaved.fastq VHL_7578_8 VHL_7578 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7579_3_interleaved.fastq VHL_7579_3 VHL_7579 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7579_4_interleaved.fastq VHL_7579_4 VHL_7579 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7579_5_interleaved.fastq VHL_7579_5 VHL_7579 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7579_8_interleaved.fastq VHL_7579_8 VHL_7579 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7581_3_interleaved.fastq VHL_7581_3 VHL_7581 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7581_4_interleaved.fastq VHL_7581_4 VHL_7581 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7581_5_interleaved.fastq VHL_7581_5 VHL_7581 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7581_8_interleaved.fastq VHL_7581_8 VHL_7581 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7582_3_interleaved.fastq VHL_7582_3 VHL_7582 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7582_4_interleaved.fastq VHL_7582_4 VHL_7582 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7582_5_interleaved.fastq VHL_7582_5 VHL_7582 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7582_8_interleaved.fastq VHL_7582_8 VHL_7582 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7584_3_interleaved.fastq VHL_7584_3 VHL_7584 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7584_4_interleaved.fastq VHL_7584_4 VHL_7584 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7584_5_interleaved.fastq VHL_7584_5 VHL_7584 illumina
+Queue
+
+arguments = /mnt/lustre1/SpellmanLab/mitcheas/VHL/FASTQ/VHL_7584_8_interleaved.fastq VHL_7584_8 VHL_7584 illumina
+Queue
+
