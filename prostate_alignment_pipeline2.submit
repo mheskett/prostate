@@ -1,0 +1,48 @@
+executable = prostate_alignment_pipeline.sh
+Universe        = vanilla
+request_cpus = 4
+TimeTaken = 86400
++MaxExecutionTime = $(TimeTaken)
+request_memory = 12GB
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+log = ./$(Cluster).$(Process).log
+output = ./$(Cluster).$(Process).out
+error = ./$(Cluster).$(Process).err
+
+arguments=/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem12N_R1.fq.gz /home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem12N_R2.fq.gz Pem12N normal illumina
+Queue
+
+arguments=/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem12T_R1.fq.gz /home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem12T_R2.fq.gz Pem12T tumor illumina
+Queue
+
+arguments=/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem13N_R1.fq.gz /home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem13N_R2.fq.gz Pem13N normal illumina
+Queue
+
+arguments=/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem13T_R1.fq.gz /home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem13T_R2.fq.gz Pem13T tumor illumina
+Queue
+
+arguments=/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem17N_R1.fq.gz /home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem17N_R2.fq.gz Pem17N normal illumina
+Queue
+
+arguments=/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem17T_R1.fq.gz /home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem17T_R2.fq.gz Pem17T tumor illumina
+Queue
+
+arguments=/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem22N_R1.fq.gz /home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem22N_R2.fq.gz Pem22N normal illumina
+Queue
+
+arguments=/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem22T_R1.fq.gz /home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem22T_R2.fq.gz Pem22T tumor illumina
+Queue
+
+arguments=/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem27N_R1.fq.gz /home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem27N_R2.fq.gz Pem27N normal illumina
+Queue
+
+arguments=/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem27T_R1.fq.gz /home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem27T_R2.fq.gz Pem27T tumor illumina
+Queue
+
+arguments=/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem28N_R1.fq.gz /home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem28N_R2.fq.gz Pem28N normal illumina
+Queue
+
+arguments=/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem28T_R1.fq.gz /home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/Pem28T_R2.fq.gz Pem28T tumor illumina
+Queue
+
