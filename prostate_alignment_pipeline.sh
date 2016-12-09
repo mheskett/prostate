@@ -1,24 +1,24 @@
 #!/usr/bin/bash
 ## Asia Mitchell - last update: Oct 15, 2015
-## UASAGE:  ./align_fastq.sh fastq(with path) filename(without.fq) sample platform
+## UASAGE:  ./align_fastq.sh fastq1 fastq2 desired_output_name
 export PATH=$PATH:/opt/installed/:/usr/bin/
 
 ################
 ## Setup temp directory, all output files will be located here
-tmp_dir='/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/tmp/'
+out_dir='/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/fastq/'
 ################
+
+DATE=`date +%Y-%m-%d`
+random=$RANDOM
 
 fq1=$1
 fq2=$2
 name=$3
-sample=$4
-plat=$5
+sample=1 ## since I previously combined fq files from 2 different lanes, readgroups dont matter
+plat=illumina
 
 echo $fq1
 echo $fq2
-outbam=$tmp_dir$name'.bam'
-outsam=$tmp_dir$name'.sam'
-
 
 ### ALL REFERENCES HAVE 'CHR' PREFIX
 ref='/mnt/tempwork/SpellmanLab/mitcheas/RefUCSC/g1k/Prefix/g1k_v37_prefix.fa'
@@ -33,7 +33,7 @@ dbsnp='/mnt/tempwork/SpellmanLab/mitcheas/DBSnp/dbsnp_138.hg19.vcf'
 ################
  if [ $? -eq 0 ]
  	then
- 		/opt/installed/bwa mem -t 24 -R $readgrp $ref $fq1 $fq2 > $outsam
+ 		/opt/installed/bwa mem -t 24 -R $readgrp $ref $fq1 $fq2 > $out_dir$name.sam
  	else
  		echo 'Exit at FASTQ to SAM:'$?
  		exit
@@ -43,10 +43,9 @@ dbsnp='/mnt/tempwork/SpellmanLab/mitcheas/DBSnp/dbsnp_138.hg19.vcf'
 ################
  if [ $? -eq 0 ]
  	then
- 		out=$tmp_dir$name'.sorted.bam'
- 		/usr/bin/java -jar /opt/installed/picard/picard-tools-1.110/SortSam.jar \
- 			INPUT=$outsam \
- 			OUTPUT=$out \
+ 		/usr/lib/jvm/jre-1.7.0/bin/java -jar /opt/installed/picard/picard-tools-1.110/SortSam.jar \
+ 			INPUT=$out_dir$name.sam \
+ 			OUTPUT=$out_dir$name.sorted.bam \
  			VALIDATION_STRINGENCY=LENIENT \
  			SORT_ORDER=coordinate 
  	else
@@ -54,119 +53,94 @@ dbsnp='/mnt/tempwork/SpellmanLab/mitcheas/DBSnp/dbsnp_138.hg19.vcf'
  		exit
  fi
 ################
-## STEP 2: MAP AND MARK DUPLICATES	
+##MAP AND MARK DUPLICATES	
 ################
 if [ $? -eq 0 ]
 	then
-		infile=$tmp_dir$name'.sorted.bam'
-#		infile=$out
-		out=$tmp_dir$name'.sorted.dedup.bam'
-		metric=$out'.metrics'
-		
-		/usr/bin/java -jar /opt/installed/picard/picard-tools-1.110/MarkDuplicates.jar \
+		 /usr/lib/jvm/jre-1.7.0/bin/java -jar /opt/installed/picard/picard-tools-1.110/MarkDuplicates.jar \
 			VALIDATION_STRINGENCY=SILENT \
 			ASSUME_SORTED=true \
 			REMOVE_DUPLICATES=true \
-			INPUT=$infile \
-			OUTPUT=$out \
-			METRICS_FILE=$metric
+			INPUT=$out_dir$name.sorted.bam \
+			OUTPUT=$out_dir$name.sorted.dedup.bam \
+			METRICS_FILE=$out_dir$name.metrics
 	else
 		echo 'Exit at MAP AND MARK DUPLICATES:'$?
 		exit
 fi
 ###############
+#Build Index
 ###############
 if [ $? -eq 0 ]
 	then
-		infile=$out
-		out=$out'.bai'
-		/usr/bin/java -jar /opt/installed/picard/picard-tools-1.110/BuildBamIndex.jar \
-			INPUT=$infile \
-			OUTPUT=$out
-#		rm $tmp_dir$name.sorted.bam
-#		rm $tmp_dir$name.sorted.bam.bai
+		/usr/lib/jvm/jre-1.7.0/bin/java -jar /opt/installed/picard/picard-tools-1.110/BuildBamIndex.jar \
+		  INPUT=$out_dir$name.sorted.dedup.bam \
+	 	  OUTPUT=$out_dir$name.sorted.dedup.bam.bai
 	else
 		echo 'Exit at MAP AND MARK DUPLICATES - BuildIndex:'$?
 		exit
 fi
-################	
-## STEP 3: PERFORM LOCAL REALIGNMENT AROUND INDELS
-## Create targets for realignment
-################
-if [ $? -eq 0 ]
-	then
-		target=$tmp_dir$name'.target_intervals.list'
-		/usr/bin/java -jar /opt/installed/GATK/GenomeAnalysisTK-3.2.jar \
-			-T RealignerTargetCreator \
-			-R $ref \
-			-I $infile \
-			-known $indel \
-			-nt 12 \
-			-o $target 
-	else
-		echo 'Exit at GATK RealignerTargetCreator:'$?
-		exit
-fi	
-################
-## Perform realignment around targets	
-################	
-if [ $? -eq 0 ]
-	then
-		out=$tmp_dir$name'.sorted.dedup.order.ra.bam'
-		/usr/bin/java -jar /opt/installed/GATK/GenomeAnalysisTK-3.2.jar \
-			-T IndelRealigner \
-			-R $ref \
-			-rf NotPrimaryAlignment \
-			-I $infile \
-			-targetIntervals $target \
-			-known $indel \
-			-o $out \
-			--filter_bases_not_stored
-	else
-		echo 'Exit at GATK IndelRealigner:'$?
-		exit
-fi
-################	
-## Build BAM index
-################	
-if [ $? -eq 0 ]
-	then	
-		infile=$out
-#		out=$tmp_dir$name'.sorted.dedup.order.ra.bam.bai'
-		/usr/bin/java -jar /opt/installed/picard/picard-tools-1.110/BuildBamIndex.jar \
-			VALIDATION_STRINGENCY=LENIENT \
-			INPUT= $infile \
-			OUTPUT=$tmp_dir$name'.sorted.dedup.order.ra.bam.bai'
-#		rm $tmp_dir$name.sorted.dedup.order.bam
-#		rm $tmp_dir$name.sorted.dedup.order.bam.bai
-	else
-		echo 'Exit at GATK IndelRealigner - BuildIndex:'$?
-		exit	
-fi
 
-################	
+################
+#RECALIBRATE BASE QUALITY SCORES
 ################
 if [ $? -eq 0 ]
+        then
+                /usr/lib/jvm/jre-1.7.0/bin/java -jar /opt/installed/GATK/GenomeAnalysisTK-3.2.jar \
+                        -T BaseRecalibrator \
+                        -R $ref \
+                        -I $out_dir$name.sorted.dedup.bam \
+                        -rf BadCigar \
+                        -l INFO \
+                        --default_platform illumina \
+                        -knownSites $dbsnp \
+                        -cov QualityScoreCovariate \
+                        -cov CycleCovariate \
+                        -cov ContextCovariate \
+                        -cov ReadGroupCovariate \
+                        --disable_indel_quals \
+                        -o $out_dir$name.recaltable
+        else
+                echo 'Exit at GATK BaseRecalibrator: '$?
+                exit
+fi
+################
+#Print Reads
+################
+if [ $? -eq 0 ]
+        then
+                /usr/lib/jvm/jre-1.7.0/bin/java -jar /opt/installed/GATK/GenomeAnalysisTK-3.2.jar \
+                        -T PrintReads \
+                        -R $ref \
+                        -I $out_dir$name.sorted.dedup.bam \
+                        -l INFO \
+                        -rf BadCigar \
+                        -BQSR $out_dir$name.recaltable  \
+                        -o $out_dir$name.bam
+        else
+                echo 'Exit at GATK PrintReads: '$?
+        exit
+fi
+################
+#Build Bam Index
+################
+if [ $? -eq 0 ]
+        then
+                 /usr/lib/jvm/jre-1.8.0/bin/java -jar /opt/installed/picard/picard-tools-1.110/BuildBamIndex.jar \
+                         VALIDATION_STRINGENCY=LENIENT \
+                         INPUT=$out_dir$name.bam \
+                         OUTPUT=$out_dir$name.bam.bai
+        else
+                echo 'Exit at Final BuildIndex:'$?
+        exit
+fi
+##############
+if [ $? -eq 0 ]
 	then
-		 /opt/installed/samtools flagstat $out > $tmp_dir$name.flagstat
+		 /opt/installed/samtools flagstat $out_dir$name.bam > $out_dir$name.flagstat
 	else
 		echo 'Exit at FLAGSTAT:'$?
 		exit
 fi
-################	
-## If you want to copy your final, aligned BAM and BAI to a different directory
-## uncomment this section and change $FINAL_DIR.
-################
 
-final_dir='/home/exacloud/lustre1/SpellmanLab/heskett/prostate_neoantigen/alignments/'
-scp $out $final_dir$name.bam
-scp $out.bai $final_dir$name.bam.bai
-
-################	
-## If you want to remove outfiles in your temp directory, uncomment this section.
-################
-#rm $outbam
-#rm $outbam.bai
-#rm $tmp_dir$name.recaltable 
-#rm $tmp_dir$name.target_intervals.list 
-#rm $tmp_dir$name.metrics
+exit
