@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-## Asia Mitchell - last update: Oct 15, 2015
+## Michael Heskett
 ## UASAGE:  ./align_fastq.sh fastq1 fastq2 desired_output_name
 export PATH=$PATH:/opt/installed/:/usr/bin/
 
